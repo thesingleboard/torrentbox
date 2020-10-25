@@ -32,7 +32,7 @@ In order to run OwnCloud efficently, it will run in Docker.
 
 Full Docker install instructions can be found here. [Docker Install](https://docs.docker.com/engine/install/debian/)
 
-`
+```
 $ apt-get update
 
 $ apt-get upgrade
@@ -44,7 +44,7 @@ $ curl -sSL https://get.docker.com | sh
 $ sudo usermod -aG docker pi
 
 $ reboot
-`
+```
 
 Once Docker is set up and running, we will install OwnCloud
 
@@ -54,20 +54,20 @@ Starting OwnCloud with Docker is very straight forward. Run the following comman
 
 *NOTE: You will need to choose a storage location on your local file system.*
 
-`
+```
 $docker pull owncloud:latest
 
 #Make sure the pulled image is arm architecture.
 $docker inspect <image id>
 
 $ docker run -d -p 443:443 owncloud:latest -v /location/on/local/host:/var/www/html
-`
+```
 
 ### Set up Transmission
 
 Transmission is the Bit Torrent client we will use to process our torrent files. We are useing transmission because it is reliable, easy to set up, and runs as a daemon.
 
-`
+```
 $ sudo apt-get install transmission-daemon
 
 #The daemon will start up by default, and needs to be stopped.
@@ -87,8 +87,8 @@ $ vi /etc/transmission-daemon/settings.json
 "rpc-username": "transmission"
 "rpc-whitelist": "127.0.0.1"
 
-#Do not restart the Daemon yet.
-`
+#Do not restart the daemon yet.
+```
 
 ### Create volume mount (optional)
 
