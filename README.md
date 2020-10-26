@@ -57,7 +57,7 @@ Starting OwnCloud with Docker is very straight forward. Run the following comman
 ```
 $docker pull owncloud:latest
 
-#Make sure the pulled image is arm architecture.
+# Make sure the pulled image is arm architecture.
 $docker inspect <image id>
 
 $ docker run -d -p 443:443 owncloud:latest -v /location/on/local/host:/var/www/html
@@ -70,13 +70,13 @@ Transmission is the Bit Torrent client we will use to process our torrent files.
 ```
 $ sudo apt-get install transmission-daemon
 
-#The daemon will start up by default, and needs to be stopped.
+# The daemon will start up by default, and needs to be stopped.
 $ sudo systemctl stop transmission-daemon
 
-#Edit the JSON config
+# Edit the JSON config
 $ vi /etc/transmission-daemon/settings.json
 
-#Edit the following keys
+# Edit the following keys
 "bind-address-ipv4": "0.0.0.0"
 "dht-enabled": true
 "download-dir": "/home/pi/Downloads/torrentbox"
@@ -87,14 +87,25 @@ $ vi /etc/transmission-daemon/settings.json
 "rpc-username": "transmission"
 "rpc-whitelist": "127.0.0.1"
 
-#Do not restart the daemon yet.
+# Do not restart the daemon yet.
 ```
 
 ### Create volume mount (optional)
 
+If you have an external NAS device, you can create a share and mount it to your Raspberry PI. In this example we are using NFS to share a folder from the NAS.
+We then mount it to a folder in the home directory. To do this, and make sure it is automatically mounted at boot we will need to edit the fstab folder. This folder will be
+used to pull the torrent files to.
+```
+$ mkdir -p /home/pi/Downloads/torrentbox
+
+$ sudo echo 'nashost_ip:/data/torrentbox /home/pi/Downloads/torrentbox nfs defaults 0 0' >> vi /etc/fstab
+
+$ sudo mount -a
+```
+
 ## Hook everything together
 
-Once everything is setup, we need to hook everything together.
+Once everything is setup, we need to hook it all together.
 
 ### Create an owncloud sync dir
 
@@ -102,10 +113,23 @@ Once everything is setup, we need to hook everything together.
 
 ### Start up Transmission
 
+When you start Transmission the write directory will be torrentbox directory, and the read directory will be the OwnCloud Torrent directory. In Daemon
+mode Transmission will automatically pick up the torrent file from the Torrent directory, and pull the payload down to the torrentbox directory.
+
+```
+#Start Transmission as a daemon and make sure it can see your owncloud sync directory
+$ transmission-daemon --help
+
+$ transmission-daemon -c /home/pi/ownCloud/Torrent/ -w /home/pi/Downloads/torrentbox/ -f -ep -gsr 0.0 -T --log-debug
+```
+
 Once Transmission is set up you can access it via a web interface to check the status.
 
 http://localhost:9091/transmission
 
 ## Set up your clients
+
+
+
 
 ## Check Downloads
