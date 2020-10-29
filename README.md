@@ -17,7 +17,7 @@ So, in oder to get around these limitations you will need to have a torrent base
 
 ## Overall architecture
 
-![Torrentbox](architecture.png)
+![Torrentbox](images/architecture.png)
 
 ## Configuration
 
@@ -28,23 +28,9 @@ In order to run OwnCloud efficently, it will run in Docker.
 
 **Install Docker on RaspberryPi OS**
 
-*NOTE: In this example we will use Docker on a PI3 armv7l architecture.*
+*NOTE: In make sure to pick the correct docker version to match your host.*
 
-Full Docker install instructions can be found here. [Docker Install](https://docs.docker.com/engine/install/debian/)
-
-```
-$ apt-get update
-
-$ apt-get upgrade
-
-# Docker provided install script
-$ curl -sSL https://get.docker.com | sh
-
-# Set up the docker user
-$ sudo usermod -aG docker pi
-
-$ reboot
-```
+Full Docker install instructions can be found here. [Docker Install](https://docs.docker.com/engine/install/)
 
 Once Docker is set up and running, we will install OwnCloud
 
@@ -57,7 +43,7 @@ Starting OwnCloud with Docker is very straight forward. Run the following comman
 ```
 $docker pull owncloud:latest
 
-# Make sure the pulled image is arm architecture.
+# Make sure the pulled image matches your system architecture.
 $docker inspect <image id>
 
 $ docker run -d -p 443:443 owncloud:latest -v /location/on/local/host:/var/www/html
@@ -105,11 +91,13 @@ $ sudo mount -a
 
 ## Hook everything together
 
-Once everything is setup, we need to hook it all together.
+Once everything is setup, we will need to connect everything together.
 
 ### Create an owncloud sync dir
 
-
+1. Log into the owncloud interface
+```
+https://"my host"
 
 ### Start up Transmission
 
