@@ -170,11 +170,13 @@ $ cp node_exporter-1.6.0.linux-amd64/node_exporter /usr/local/bin
 $ node_exporter &
 ```
 
-3. Configure your Prometheus server to scrape the endpoint
+3. Configure your Prometheus server to scrape the endpoint. 
 
 ```bash
 torrentbox_ip:9100
 ```
+
+Make sure to configure your systen to start the node exporter on startup
 
 ## Test Torrentbox
 
@@ -188,4 +190,4 @@ Once Transmission is set up you can access it via a web interface to check the s
 http://localhost:9091/transmission
 ```
 
-In order to use a mobile device on the move, you will need to make sure that the owncloud server is passed through any firewalls or NAT devices you may have. In this case you would pass port 44 through the fiewall. If you customize the install and use a different port make sure to forward that port and not port 443.
+In order to use a mobile device on the move, you will need to make sure that the owncloud server is passed through any firewalls or NAT devices you may have. In this case you would pass port 443 through the fiewall. If you customize the install and use a different port make sure to forward that port and not port 443.
