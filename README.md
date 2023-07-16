@@ -150,6 +150,32 @@ $ transmission-daemon --help
 $ transmission-daemon -c /home/pi/ownCloud/Torrent/ -w /home/pi/Downloads/torrentbox/ -f -ep -gsr 0.0 -T --log-debug
 ```
 
+## Add Prometheus
+
+An easy way to keep track of the Torrentbox is to use the node exporter. If you are running a Prometheus server the node exporter will allow you scrape the Torrentbox and pull metrics from it. 
+
+1. Pull the node exporter
+
+```bash
+$ wget https://github.com/prometheus/node_exporter/releases/download/v1.6.0/node_exporter-1.6.0.linux-amd64.tar.gz
+```
+
+2. Untar the exporter and copy to the bin directory.
+
+```bash
+$ tar -xvf node_exporter-1.6.0.linux-amd64.tar.gz
+
+$ cp node_exporter-1.6.0.linux-amd64/node_exporter /usr/local/bin
+
+$ node_exporter &
+```
+
+3. Configure your Prometheus server to scrape the endpoint
+
+```bash
+torrentbox_ip:9100
+```
+
 ## Test Torrentbox
 
 Download a torrent file and add it to the sync directory. The .torrent file will sync to the torrentbox.
